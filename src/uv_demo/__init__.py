@@ -1,2 +1,2 @@
-def hello() -> str:
-    return "Hello from uv-demo!"
+def main() -> None:
+    print("Hello from uv-demo!")
