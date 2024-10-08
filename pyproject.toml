@@ -1,17 +1,19 @@
 [project]
-name = "uv-demo"
-version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-authors = [
-    { name = "Lucas Parzianello", email = "lucaspar@users.noreply.github.com" } 
-]
-requires-python = ">=3.13"
-dependencies = []
+    authors         = [{ name = "Lucas Parzianello", email = "lucaspar@users.noreply.github.com" }]
+    dependencies    = ["loguru>=0.7.2"]
+    description     = "Just a demo of the uv package manager for Python."
+    name            = "uv-demo"
+    readme          = "README.md"
+    requires-python = ">=3.13"
+    version         = "0.2.0"
 
-[project.scripts]
-uv-demo = "uv_demo:main"
+    [project.scripts]
+        uv-demo     = "uv_demo:say_hello"
+        uv-demo-bye = "uv_demo:say_goodbye"
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+    build-backend = "hatchling.build"
+    requires      = ["hatchling"]
+
+[tool.uv]
+    dev-dependencies = ["pytest>=8.3.3", "ruff>=0.6.9"]
