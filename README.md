@@ -1,5 +1,10 @@
 # `uv-demo` PyPI package
 
+![PyPI - Version](https://img.shields.io/pypi/v/uv-demo)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/uv-demo)
+![Pepy Total Downloads](https://img.shields.io/pepy/dt/uv-demo)
+[![Action | Upload Python Package](https://github.com/lucaspar/uv-demo/actions/workflows/python-publish.yaml/badge.svg)](https://github.com/lucaspar/uv-demo/actions/workflows/python-publish.yaml)
+
 A demo for the `uv` package manager. Very useless.
 
 ## Setup and Execution
@@ -11,6 +16,8 @@ uv run uv-demo
 This will install all dependencies (`uv sync`) and run the entrypoint script.
 
 ## Integration with GitHub Actions
+
+See the [Upload Python Package workflow file](.github/workflows/python-publish.yaml) for this package.
 
 ### Running actions locally
 
