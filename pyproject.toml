@@ -7,6 +7,7 @@
     requires-python = ">=3.13"
     version         = "0.2.1"
 
+
     [project.scripts]
         uv-demo     = "uv_demo:say_hello"
         uv-demo-bye = "uv_demo:say_goodbye"
@@ -14,6 +15,10 @@
 [build-system]
     build-backend = "hatchling.build"
     requires      = ["hatchling"]
+
+[tool.hatch.build.targets.sdist]
+    # https://hatch.pypa.io/latest/config/build/
+    exclude = [".github", "*.env*", "*secret*", "config/"]
 
 [tool.uv]
     dev-dependencies = ["pytest>=8.3.3", "ruff>=0.6.9"]
