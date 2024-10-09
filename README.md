@@ -21,10 +21,16 @@ See the [Upload Python Package workflow file](.github/workflows/python-publish.y
 
 ### Running actions locally
 
-You can use `act` to run GitHub Actions locally and speedup feedback. It can be installed as a GitHub CLI extension:
+You can use `act` to run GitHub Actions locally. Use cases:
+
+1. While writing a workflow, to test the workflow locally before pushing to the repository.
+2. Run the publishing workflow without setting secrets on GitHub.
+3. Before opening a pull request, to check the workflow will pass.
+
+It can be installed as a GitHub CLI extension:
 
 ```bash
-gh extension install https://github.com/nektos/gh-act^C
+gh extension install https://github.com/nektos/gh-act
 cp config/secrets.env.example config/secrets.env
 # edit config/secrets.env with the required secrets
 gh act --secret-file config/secrets.env
