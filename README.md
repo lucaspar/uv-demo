@@ -5,7 +5,9 @@
 ![Pepy Total Downloads](https://img.shields.io/pepy/dt/uv-demo)
 [![Action | Upload Python Package](https://github.com/lucaspar/uv-demo/actions/workflows/python-publish.yaml/badge.svg)](https://github.com/lucaspar/uv-demo/actions/workflows/python-publish.yaml)
 
-A demo for the `uv` package manager. Very useless.
+A demo for the `uv` package manager. Very useless as a package.
+
+Use this as a template for a `uv` package, with GitHub actions, pre-commit hooks, and some opinionated config.
 
 ## Setup and Execution
 

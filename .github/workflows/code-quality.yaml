@@ -1,0 +1,57 @@
+# This workflow is for code quality checks and tests.
+# TIP:  To run GH actions locally, you can use nektos/gh-act:
+#           With the GitHub CLI installed, run `gh extension install nektos/gh-act`
+#           Then, run `gh act` from the project root. Choose 'medium' image in the first run.
+#       You can set an alias to run it from anywhere within the repo:
+#           `alias gact='gh act --workflows "$(git rev-parse --show-toplevel)"/.github/workflows'
+name: Code Quality
+
+on:
+    push:
+        branches:
+            - main
+            - master
+    pull_request:
+        branches:
+            - main
+            - master
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.13"
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v3
+              # https://github.com/marketplace/actions/astral-sh-setup-uv
+              with:
+                  version: "latest"
+
+            - name: Install dependencies
+              run: uv sync --dev -p 3.13
+
+            - name: Run tests
+              run: uv run pytest ./tests
+
+            - name: lint
+              run: uv run ruff check ./src ./tests
+
+            - name: format
+              run: uv run ruff format --check ./src ./tests
+
+            - name: Run static checker
+              uses: jakebailey/pyright-action@v2
+              # https://github.com/jakebailey/pyright-action
+              with:
+                  pylance-version: latest-release
+
+            - name: Runs mypy
+              run: uv run mypy ./src
