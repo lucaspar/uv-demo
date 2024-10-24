@@ -36,9 +36,59 @@
     build-backend = "hatchling.build"
     requires      = ["hatchling"]
 
+[tool.coverage.html]
+    directory = "tests/htmlcov"
+
+[tool.coverage.report]
+    # https://coverage.readthedocs.io/en/latest/source.html
+
+    # https://coverage.readthedocs.io/en/latest/excluding.html#advanced-exclusion
+    exclude_also = [
+        # 1. Exclude an except clause of a specific form:
+        "except ValueError:\\n\\s*assume\\(False\\)",
+        # 2. Comments to turn coverage on and off:
+        "no cover: start(?s:.)*?no cover: stop",
+        # 3. A pragma comment that excludes an entire file:
+        "\\A(?s:.*# pragma: exclude file.*)\\Z",
+        # common exclusions
+        "def __repr__",
+        "if self.debug:",
+        "if settings.DEBUG",
+        "raise AssertionError",
+        "raise NotImplementedError",
+        "if 0:",
+        "if __name__ == .__main__.:",
+        "if TYPE_CHECKING:",
+        "class .*\\bProtocol\\):",
+        "@(abc\\.)?abstractmethod",
+    ]
+
+[tool.coverage.run]
+    omit = ["tests/*", "**/main.py", "**/__init__.py"]
+
 [tool.hatch.build.targets.sdist]
     # https://hatch.pypa.io/latest/config/build/
     exclude = [".github", "*.env*", "*secret*", "config/"]
 
+[tool.pytest]
+
+    [tool.pytest.ini_options]
+        # pytest
+        #   https://docs.pytest.org/en/stable/reference/reference.html#confval-addopts
+        # pytest-cov
+        #   https://pytest-cov.readthedocs.io/en/latest/config.html
+        # more verbose:
+        # addopts = "--maxfail=2 --new-first -rf --strict-markers --cov=src --cov-report=html --show-capture=stdout -o log_cli=true --showlocals --tb=long --capture=no"
+        # less verbose:
+        addopts              = "--maxfail=2 --new-first -rf --strict-markers --cov=src --cov-report=html --show-capture=stdout -o log_cli=true --tb=short"
+        console_output_style = "progress"
+        log_auto_indent      = true
+        log_cli              = true
+        log_cli_level        = "WARN"
+        log_date_format      = "%Y-%m-%d %H:%M:%S"
+        minversion           = "8.0"
+        testpaths            = ["tests"]
+        verbosity_test_cases = 2
+
 [tool.uv]
-    dev-dependencies = ["pytest>=8.3.3", "ruff>=0.6.9"]
+    dev-dependencies = ["pytest-cov>=5.0.0", "pytest>=8.3.3", "rich>=13.9.3", "ruff>=0.6.9"]
