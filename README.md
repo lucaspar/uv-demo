@@ -9,6 +9,21 @@ A demo for the `uv` package manager. Very useless as a package.
 
 Use this as a template for a `uv` package, with GitHub actions, pre-commit hooks, and some opinionated config.
 
+## System Dependencies
+
++ `uv`
+    + `curl -LsSf https://astral.sh/uv/install.sh | sh`
++ `make`
+    + `sudo apt install make`
+    + `sudo pacman -S make`
++ For running GitHub Actions locally
+    + [Docker](https://docs.docker.com/desktop/install/linux/)
+    + `gh` (GitHub CLI)
+        + `sudo pacman -S github-cli`
+        + [Others](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
+    + [`gh-act`](https://github.com/nektos/gh-act)
+        + `gh extension install nektos/gh-act`
+
 ## Quick start
 
 This will install all dependencies (`uv sync`) and run the entrypoint script:
@@ -21,7 +36,7 @@ uv run uv-demo
 
 ```bash
 make
-# equivalent to make install tox
+# equivalent to make install test
 
 make install
 # runs uv sync
@@ -34,6 +49,10 @@ make serve-coverage
 
 make gact
 # runs GitHub Actions locally with gh-act
+#
+# >>> WARNING: if the secrets file has a valid API key,
+#   this target will actually publish the package to PyPI.
+#
 # Install with:     gh extension install nektos/gh-act
 # or see            https://github.com/nektos/act
 
