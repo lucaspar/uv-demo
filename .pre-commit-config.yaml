@@ -26,8 +26,8 @@ repos:
           - id: pretty-format-json
             args:
                 - --autofix
-                - --indent 4
+                - --indent=4
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.4.20
+      rev: 0.4.27
       hooks:
           - id: uv-lock # makes sure the uv.lock file is up to date
