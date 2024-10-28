@@ -32,6 +32,11 @@ make test
 make serve-coverage
 # serves coverage report on localhost:8000
 
+make gact
+# runs GitHub Actions locally with gh-act
+# Install with:     gh extension install nektos/gh-act
+# or see            https://github.com/nektos/act
+
 make clean
 # removes all venv, tox, cache, and generated files
 ```

@@ -8,6 +8,12 @@ all: install test
 install:
 	uv sync --dev --frozen
 
+# GITHUB ACTIONS
+gact:
+	# install gh-act with:
+	# gh extension install nektos/gh-act
+	gh act --workflows .github/workflows
+
 # TESTS
 test: tox
 tox:
