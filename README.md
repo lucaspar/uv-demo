@@ -9,13 +9,32 @@ A demo for the `uv` package manager. Very useless as a package.
 
 Use this as a template for a `uv` package, with GitHub actions, pre-commit hooks, and some opinionated config.
 
-## Setup and Execution
+## Quick start
+
+This will install all dependencies (`uv sync`) and run the entrypoint script:
 
 ```bash
 uv run uv-demo
 ```
 
-This will install all dependencies (`uv sync`) and run the entrypoint script.
+## Make targets
+
+```bash
+make
+# equivalent to make install tox
+
+make install
+# runs uv sync
+
+make test
+# runs tests for supported python versions
+
+make serve-coverage
+# serves coverage report on localhost:8000
+
+make clean
+# removes all venv, tox, cache, and generated files
+```
 
 ## Integration with GitHub Actions
 
