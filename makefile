@@ -21,4 +21,8 @@ serve-coverage:
 
 # CLEANUP
 clean:
-	rm -rf .tox .coverage .pytest_cache .venv .python-version .cache
+	rm -rf \
+		.tox .coverage \
+		.pytest_cache .python-version .cache dist \
+		.venv .eggs .eggs/ \
+		*.egg-info *.egg-info/
