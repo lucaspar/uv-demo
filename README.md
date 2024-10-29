@@ -5,9 +5,16 @@
 ![Pepy Total Downloads](https://img.shields.io/pepy/dt/uv-demo)
 [![Action | Upload Python Package](https://github.com/lucaspar/uv-demo/actions/workflows/python-publish.yaml/badge.svg)](https://github.com/lucaspar/uv-demo/actions/workflows/python-publish.yaml)
 
-A demo for the `uv` package manager. Very useless as a package.
+A demo and template for a modern Python package managed by `uv`. Very useless as a package.
 
-Use this as a template for a `uv` package, with GitHub actions, pre-commit hooks, and some opinionated config.
+Use this as a template for new projects, or as a reference for how to set up a Python project with the following:
+
++ [x] `uv` as the Python package manager.
++ [x] [`tox`](./tox.ini) for testing the three latest Python versions.
++ [x] [`pre-commit` hooks](./.pre-commit-config.yaml) for code formatting and linting.
++ [x] [GitHub Actions](./.github/workflows/) for testing and publishing.
++ [x] `gh-act` for running GitHub Actions locally.
++ [x] [Makefile](./makefile) with common targets.
 
 ## System Dependencies
 
@@ -58,6 +65,9 @@ make gact
 
 make clean
 # removes all venv, tox, cache, and generated files
+
+make update
+# updates uv and pre-commit hooks
 ```
 
 ## Integration with GitHub Actions
@@ -72,15 +82,10 @@ You can use `act` to run GitHub Actions locally. Use cases:
 2. Run the publishing workflow without setting secrets on GitHub.
 3. Before opening a pull request, to check the workflow will pass.
 
-It can be installed as a GitHub CLI extension:
+Copy the example secrets file and edit it with the required secrets:
 
 ```bash
-gh extension install https://github.com/nektos/gh-act
 cp config/secrets.env.example config/secrets.env
-# edit config/secrets.env with the required secrets
-gh act --secret-file config/secrets.env
-# select medium-sized image in first run.
 ```
 
-+ [`act` installation](https://nektosact.com/installation/index.html)
-+ [`act` usage](https://nektosact.com/usage/index.html)
+Then run `make gact` to run the GitHub Actions workflow locally.

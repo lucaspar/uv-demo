@@ -6,6 +6,7 @@ all: install test
 
 # SETUP
 install:
+	uv run pre-commit install --install-hooks
 	uv sync --dev --frozen
 
 # GITHUB ACTIONS
@@ -32,3 +33,8 @@ clean:
 		.pytest_cache .python-version .cache dist \
 		.venv .eggs .eggs/ \
 		*.egg-info *.egg-info/
+
+# UPDATE
+update:
+	uv sync --upgrade
+	uv run pre-commit autoupdate
