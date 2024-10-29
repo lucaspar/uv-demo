@@ -71,6 +71,9 @@ make update
 
 make publish
 # publishes the package to PyPI
+#
+# >>> WARNING: if the secrets file has a valid API key,
+#   this target will actually publish the package to PyPI.
 ```
 
 ## Integration with GitHub Actions
