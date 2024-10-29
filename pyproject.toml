@@ -5,7 +5,7 @@
     name            = "uv-demo"
     readme          = "README.md"
     requires-python = ">=3.11"
-    version         = "0.2.3"
+    version         = "0.2.4"
 
     # https://pypi.org/classifiers/
     classifiers = [
@@ -13,6 +13,7 @@
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: Unix",
+        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: Implementation :: CPython",

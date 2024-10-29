@@ -38,3 +38,13 @@ clean:
 update:
 	uv sync --upgrade
 	uv run pre-commit autoupdate
+
+# PUBLISH
+publish:
+	@if [ ! -f config/secrets.env ]; then \
+		echo "Error: config/secrets.env does not exist."; \
+		exit 1; \
+	fi
+	export UV_PUBLISH_TOKEN=$$(grep PYPI_API_TOKEN config/secrets.env | cut -d '=' -f2)
+	uv build
+	uv publish

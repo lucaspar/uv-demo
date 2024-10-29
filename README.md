@@ -68,6 +68,9 @@ make clean
 
 make update
 # updates uv and pre-commit hooks
+
+make publish
+# publishes the package to PyPI
 ```
 
 ## Integration with GitHub Actions
