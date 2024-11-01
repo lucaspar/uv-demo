@@ -48,3 +48,10 @@ publish:
 	export UV_PUBLISH_TOKEN=$$(grep PYPI_API_TOKEN config/secrets.env | cut -d '=' -f2)
 	uv build
 	uv publish
+
+# DOCUMENTATION
+docs:
+	uv run pdoc src/uv_demo/ -o docs/
+docs-serve:
+	$(MAKE) docs
+	uv run -m http.server 12001 -d docs/
