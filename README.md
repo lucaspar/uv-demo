@@ -3,7 +3,7 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/uv-demo)](https://pypi.org/project/uv-demo/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/uv-demo)](https://pypi.org/project/uv-demo/)
 [![Pepy Total Downloads](https://img.shields.io/pepy/dt/uv-demo)](https://pypi.org/project/uv-demo/)
-[![Action | Upload Python Package](https://github.com/lucaspar/uv-demo/actions/workflows/python-publish.yaml/badge.svg)](https://github.com/lucaspar/uv-demo/actions/workflows/python-publish.yaml)
+[![Code Quality Check](https://github.com/lucaspar/uv-demo/actions/workflows/code-quality.yaml/badge.svg)](https://github.com/lucaspar/uv-demo/actions/workflows/code-quality.yaml)
 
 A demo and template for a modern Python package managed by `uv`. Very useless as a package.
 
