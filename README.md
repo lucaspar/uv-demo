@@ -15,6 +15,7 @@ Use this as a template for new projects, or as a reference for how to set up a P
 + [x] [GitHub Actions](./.github/workflows/) for testing and publishing.
 + [x] `gh-act` for running GitHub Actions locally.
 + [x] [Makefile](./makefile) with common targets.
++ [x] Documentation with `pdoc` + GitHub Pages.
 
 ## System Dependencies
 
