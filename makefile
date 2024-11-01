@@ -54,4 +54,6 @@ docs:
 	uv run pdoc src/uv_demo/ -o docs/
 docs-serve:
 	$(MAKE) docs
-	uv run -m http.server 12001 -d docs/
+	uv run -m http.server 12001 -d docs/ &> /dev/null & disown
+	sleep 1
+	xdg-open http://localhost:12001/
