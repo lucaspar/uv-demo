@@ -22,7 +22,9 @@
     ]
 
     # https://packaging.python.org/en/latest/specifications/dependency-specifiers/
-    dependencies = ["loguru>=0.7.2"]
+    dependencies = [
+    "loguru>=0.7.2",
+]
 
     [project.scripts]
         uv-demo     = "uv_demo:say_hello"
@@ -70,9 +72,20 @@
 [tool.coverage.run]
     omit = ["tests/*", "**/main.py", "**/__init__.py"]
 
-[tool.hatch.build.targets.sdist]
-    # https://hatch.pypa.io/latest/config/build/
-    exclude = [".github", "*.env*", "*secret*", "config/"]
+[tool.deptry]
+    # https://deptry.readthedocs.io/en/latest/
+    # extend_exclude = ["docs", "tests"]
+    [tool.deptry.per_rule_ignores]
+        DEP002 = [
+            "tox", # used from makefile and gh actions
+        ]
+        DEP003 = [
+            "uv_demo", # ignore the package itself
+        ]
+
+    [tool.hatch.build.targets.sdist]
+        # https://hatch.pypa.io/latest/config/build/
+        exclude = [".github", "*.env*", "*secret*", "config/"]
 
 [tool.pytest]
 
@@ -96,8 +109,10 @@
 
 [tool.uv]
     dev-dependencies = [
+        "deptry>=0.20.0",
         "mypy>=1.13.0",
         "pdoc>=15.0.0",
+        "pre-commit>=4.0.1",
         "pytest-cov>=5.0.0",
         "pytest>=8.3.3",
         "rich>=13.9.3",

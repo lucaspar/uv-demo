@@ -16,6 +16,7 @@ Use this as a template for new projects, or as a reference for how to set up a P
 + [x] `gh-act` for running GitHub Actions locally.
 + [x] [Makefile](./makefile) with common targets.
 + [x] Documentation with `pdoc` + GitHub Pages.
++ [x] Deptry to highlight missing and unused dependencies.
 
 ## System Dependencies
 
