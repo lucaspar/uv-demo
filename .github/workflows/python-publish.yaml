@@ -1,9 +1,11 @@
 # This workflow will upload a Python Package using Twine when a release is created
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+# Test this workflow with `make gact-release`
 
 name: Upload Python Package
 
 on:
+    workflow_dispatch: # Manually trigger the workflow from the Actions tab
     release:
         types: [published]
 
@@ -12,10 +14,9 @@ permissions:
     contents: read
 
 jobs:
-    deploy:
+    build:
         runs-on: ubuntu-latest
-        name: pypi-deploy
-        environment: pypi
+        name: uv-build
         steps:
             # https://github.com/actions/checkout
             - name: Checkout code
@@ -56,10 +57,20 @@ jobs:
             - name: Build package
               run: uv build --link-mode=copy
 
+    deploy:
+        runs-on: ubuntu-latest
+        name: pypi-deploy
+        needs: build
+        environment: pypi
+        permissions:
+            # A 'write' permission is mandatory for trusted publishing
+            id-token: write
+        steps:
             - name: Publish package
               # https://github.com/marketplace/actions/pypi-publish
               uses: pypa/gh-action-pypi-publish@release/v1
-              with:
-                  # https://pypi.org/manage/account/#api-tokens
-                  user: __token__
-                  password: ${{ secrets.PYPI_API_TOKEN }}
+              # When not using a Trusted Publisher, you can use the following credentials:
+              # with:
+              #     # https://pypi.org/manage/account/#api-tokens
+              #     user: __token__
+              #     password: ${{ secrets.PYPI_API_TOKEN }}
