@@ -2,6 +2,8 @@
 
 SHELL=/bin/bash
 
+.PHONY: all install gact test test-verbose test-all tox serve-coverage clean update publish docs docs-serve
+
 all: install test
 
 # SETUP
@@ -16,8 +18,11 @@ gact:
 	gh act --workflows .github/workflows --secret-file config/secrets.env
 
 # TESTS
-test: tox
-tox:
+test:
+	uv run pytest -vvv --cov=src
+test-verbose:
+	uv run pytest -vvv --cov=src --capture=no
+test-all:
 	# pyv=("3.11" "3.12" "3.13"); for py in "${pyv[@]}"; do echo "${py}"; uv run -p "${py}" tox run -vvv -e "python${py}"; done
 	uv run -p "3.11" tox run -e "python3.11"
 	uv run -p "3.12" tox run -e "python3.12"
