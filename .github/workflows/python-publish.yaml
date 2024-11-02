@@ -57,6 +57,12 @@ jobs:
             - name: Build package
               run: uv build --link-mode=copy
 
+            - name: Store artifact
+              uses: actions/upload-artifact@main
+              with:
+                  name: dist
+                  path: dist
+
     deploy:
         runs-on: ubuntu-latest
         name: pypi-deploy
@@ -66,6 +72,12 @@ jobs:
             # A 'write' permission is mandatory for trusted publishing
             id-token: write
         steps:
+            - name: Download artifact
+              uses: actions/download-artifact@main
+              with:
+                  name: dist
+                  path: dist
+
             - name: Publish package
               # https://github.com/marketplace/actions/pypi-publish
               uses: pypa/gh-action-pypi-publish@release/v1

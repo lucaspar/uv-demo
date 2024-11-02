@@ -59,10 +59,10 @@ gact:
 	# install gh-act with:
 	# gh extension install nektos/gh-act
 	gh act \
-		--workflows "$(git rev-parse --show-toplevel)"/.github/workflows
+		--workflows "$$(git rev-parse --show-toplevel)/.github/workflows"
 gact-release:
 	gh act \
-		--workflows "$(git rev-parse --show-toplevel)"/.github/workflows \
+		--workflows "$$(git rev-parse --show-toplevel)/.github/workflows" \
 		--secret-file config/secrets.env \
 		release
 gact-pr:
@@ -71,7 +71,7 @@ gact-pull-request:
 	# this will test the build and publish jobs, but the publish job will only
 	# run successfully on the GitHub repo, as the configured trusted publisher.
 	gh act \
-		--workflows "$(git rev-parse --show-toplevel)"/.github/workflows \
+		--workflows "$$(git rev-parse --show-toplevel)/.github/workflows" \
 		--secret-file config/secrets.env \
 		pull-request
 
