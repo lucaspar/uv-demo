@@ -5,7 +5,7 @@
     name            = "uv-demo"
     readme          = "README.md"
     requires-python = ">=3.11"
-    version         = "0.2.4"
+    version         = "0.2.5"
 
     # https://pypi.org/classifiers/
     classifiers = [
@@ -22,9 +22,7 @@
     ]
 
     # https://packaging.python.org/en/latest/specifications/dependency-specifiers/
-    dependencies = [
-    "loguru>=0.7.2",
-]
+    dependencies = ["loguru>=0.7.2"]
 
     [project.scripts]
         uv-demo     = "uv_demo:say_hello"
@@ -118,4 +116,4 @@
         "rich>=13.9.3",
         "ruff>=0.6.9",
         "tox>=4.23.2",
-]
+    ]
