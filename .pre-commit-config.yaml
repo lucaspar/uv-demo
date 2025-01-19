@@ -29,7 +29,7 @@ repos:
 
     # makes sure the uv.lock file is up to date
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.4.29
+      rev: 0.5.21
       hooks:
           - id: uv-lock
 
