@@ -27,11 +27,13 @@ repos:
                 - --autofix
                 - --indent=4
 
-    # makes sure the uv.lock file is up to date
+    # makes sure the uv.lock file is up to date and .venv is in sync
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.5.21
+      rev: 0.6.16
       hooks:
           - id: uv-lock
+          - id: uv-sync
+            args: ["--locked", "--all-packages"]
 
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v5.0.0
@@ -48,3 +50,28 @@ repos:
             types: [python]
             always_run: true
             pass_filenames: false
+
+    # run pylint
+    # https://pylint.pycqa.org/en/latest/user_guide/installation/pre-commit-integration.html
+    - repo: local
+      hooks:
+          - id: pylint
+            name: pylint
+            entry: pylint
+            language: system
+            types: [python]
+            args: [
+                    "-rn", # Only display messages
+                    "-sn", # Don't display the score
+                    # "--rcfile=pylintrc", # Link to your config file
+                    # "--load-plugins=pylint.extensions.docparams", # Load an extension
+                    "--verbose",
+                ]
+
+    # run pyright
+    # https://github.com/RobertCraigie/pyright-python#pre-commit
+    - repo: https://github.com/RobertCraigie/pyright-python
+      rev: v1.1.399
+      hooks:
+          - id: pyright
+            entry: uv run pyright --verbose --stats
