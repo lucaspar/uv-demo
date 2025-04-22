@@ -10,11 +10,11 @@ A demo and template for a modern Python package managed by `uv`. Very useless as
 Use this as a template for new projects, or as a reference for how to set up a Python project with the following:
 
 + [x] `uv` as the Python package manager.
-+ [x] [`tox`](./tox.ini) for testing the three latest Python versions.
-+ [x] [`pre-commit` hooks](./.pre-commit-config.yaml) for code formatting and linting.
++ [x] [`pre-commit` hooks](./.pre-commit-config.yaml) for code formatting, linting, and quality checks.
 + [x] [GitHub Actions](./.github/workflows/) for testing and publishing.
++ [x] Multiple Python versions tested with `uv -p ${python-version} run pytest [...]`.
 + [x] `gh-act` for running GitHub Actions locally.
-+ [x] [Makefile](./makefile) with common targets.
++ [x] [Justfile](./justfile) with common recipes.
 + [x] Documentation with `pdoc` + GitHub Pages.
 + [x] Deptry to highlight missing and unused dependencies.
 
@@ -22,9 +22,10 @@ Use this as a template for new projects, or as a reference for how to set up a P
 
 + `uv`
     + `curl -LsSf https://astral.sh/uv/install.sh | sh`
-+ `make`
-    + `sudo apt install make`
-    + `sudo pacman -S make`
++ `just`
+    + `sudo apt install just`
+    + `sudo pacman -S just`
+    + [More](https://github.com/casey/just#linux) installation methods.
 + For running GitHub Actions locally
     + [Docker](https://docs.docker.com/desktop/install/linux/)
     + `gh` (GitHub CLI)
@@ -41,41 +42,32 @@ This will install all dependencies (`uv sync`) and run the entrypoint script:
 uv run uv-demo
 ```
 
-## Make targets
+## `just` Recipes
 
 ```bash
-make
-# equivalent to make install test
-
-make install
-# runs uv sync
-
-make test
-# runs tests for supported python versions
-
-make serve-coverage
-# serves coverage report on localhost:8000
-
-make gact
-# runs GitHub Actions locally with gh-act
-#
-# >>> WARNING: if the secrets file has a valid API key,
-#   this target will actually publish the package to PyPI.
-#
-# Install with:     gh extension install nektos/gh-act
-# or see            https://github.com/nektos/act
-
-make clean
-# removes all venv, tox, cache, and generated files
-
-make update
-# updates uv and pre-commit hooks
-
-make publish
-# publishes the package to PyPI
-#
-# >>> WARNING: if the secrets file has a valid API key,
-#   this target will actually publish the package to PyPI.
+# just --list
+Available recipes:
+    all               # Installs dependencies and runs tests
+    build             # Build the package and run tests
+    check             # Run all code quality checks and linting
+    clean             # Clean up generated files
+    deptry            # Run deptry to check for unused and missing dependencies
+    docs              # Generate and serve documentation
+    docs-gen          # Generate documentation using pdoc
+    docs-serve        # Serve the docs with a simple HTTP server
+    gact              # Run the GitHub Actions workflow for all branches
+    gact-pr           # Alias for gact-pull-request
+    gact-pull-request # Run the GitHub Actions workflow for pull requests
+    gact-release      # Run the GitHub Actions workflow for release
+    install           # Install pre-commit hooks and development project dependencies with uv
+    pre-commit        # Run pre-commit hooks on all files
+    publish           # Build and publish the package to PyPI
+    serve-coverage    # Serve the coverage report with a simple HTTP server
+    test              # Simple execution of tests with coverage
+    test-all          # Run static checker and tests for all compatible python versions
+    test-verbose      # Run tests with coverage and increased output
+    update            # Alias for upgrade
+    upgrade           # Upgrades all project and pre-commit dependencies respecting pyproject.toml constraints
 ```
 
 ## Integration with GitHub Actions
@@ -96,4 +88,4 @@ Copy the example secrets file and edit it with the required secrets:
 cp config/secrets.env.example config/secrets.env
 ```
 
-Then run `make gact` to run the GitHub Actions workflow locally.
+Then run `just gact` to run the GitHub Actions workflow locally.
