@@ -82,10 +82,12 @@ You can use `act` to run GitHub Actions locally. Use cases:
 2. Run the publishing workflow without setting secrets on GitHub.
 3. Before opening a pull request, to check the workflow will pass.
 
-Copy the example secrets file and edit it with the required secrets:
+Copy the example secrets file:
 
 ```bash
-cp config/secrets.env.example config/secrets.env
+cp "config/secrets.env.example" "config/secrets.env"
 ```
 
-Then run `just gact` to run the GitHub Actions workflow locally.
+Then edit the new file to add your secrets.
+
+After that, run `just gact` to run the GitHub Actions workflow locally.

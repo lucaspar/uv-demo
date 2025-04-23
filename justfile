@@ -3,6 +3,7 @@
 
 SHELL := x'/bin/bash'
 DOCS_PORT := "12001"
+DOC_FILES := '`find docs/ -type f`'
 
 # Installs dependencies and runs tests
 all: install test
@@ -34,6 +35,9 @@ docs: docs-gen docs-serve
 # Generate documentation using pdoc
 docs-gen:
     uv run pdoc "src/uv_demo/" -o "docs/"
+    @echo {{DOC_FILES}}
+    uv run pre-commit run --files {{DOC_FILES}} || true
+    @echo -e "\n\033[32mDocumentation generated in docs/ and linted with pre-commit hooks.\033[0m\n"
 
 # Serve the docs with a simple HTTP server
 docs-serve:
@@ -87,20 +91,24 @@ publish:
 
 # Simple execution of tests with coverage
 test:
-    uv run pytest -vvv --cov=src
+    uv run pytest -vvv --cov="src"
 
 # Run static checker and tests for all compatible python versions
 test-all:
     just check
-    pyv=("3.11" "3.12" "3.13"); for py in "${pyv[@]}"; do echo "${py}"; uv run -p "${py}" pytest -vvv --cov=src; done
+    @pyv=("3.11" "3.12" "3.13"); \
+    for py in "${pyv[@]}"; do \
+        echo "${py}"; \
+        uv run -p "${py}" pytest -v --cov="src"; \
+    done
 
 # Run tests with coverage and increased output
 test-verbose:
-    uv run pytest -vvv --cov=src --capture=no
+    uv run pytest -vvv --cov="src" --capture=no
 
 # Serve the coverage report with a simple HTTP server
 serve-coverage:
-    python -m http.server 8000 -d tests/htmlcov
+    python -m http.server 8000 -d "tests/htmlcov"
 
 # Alias for upgrade
 update: upgrade
