@@ -22,9 +22,7 @@
     ]
 
     # https://packaging.python.org/en/latest/specifications/dependency-specifiers/
-    dependencies = [
-    "loguru>=0.7.2",
-]
+    dependencies = ["loguru>=0.7.2", "numpy>=2.3.0"]
 
     [project.scripts]
         uv-demo     = "uv_demo:say_hello"
@@ -70,8 +68,8 @@
     omit = ["tests/*", "**/main.py", "**/__init__.py"]
 
 [tool.deptry]
-    # https://deptry.readthedocs.io/en/latest/
-    # extend_exclude = ["docs", "tests"]
+    # https://deptry.com/usage
+    extend_exclude = ["stream-demo.py"]
     [tool.deptry.per_rule_ignores]
         DEP002 = [
             # packages that are installed but not imported
@@ -117,4 +115,4 @@
         "ruff>=0.6.9",
         "pylint>=3.3.6",
         "pyright>=1.1.399",
-]
+    ]
