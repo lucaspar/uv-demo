@@ -5,6 +5,7 @@ SHELL := x'/bin/bash'
 DOCS_PORT := "12001"
 DOC_FILES := '`find docs/ -type f`'
 
+alias check:= pre-commit
 alias update:= upgrade
 alias gact-pr:= gact-pull-request
 
@@ -16,9 +17,6 @@ build:
     uv build --no-cache
 
 # Run all code quality checks and linting
-check:
-    just deptry
-    just pre-commit
 
 # Clean up generated files
 clean:
