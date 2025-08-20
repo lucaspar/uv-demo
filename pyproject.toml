@@ -68,8 +68,10 @@
     omit = ["tests/*", "**/main.py", "**/__init__.py"]
 
 [tool.deptry]
-    # https://deptry.readthedocs.io/en/latest/
+    # https://deptry.com/usage/#options
     # extend_exclude = ["docs", "tests"]
+
+    # https://deptry.com/usage/#per-rule-ignores
     [tool.deptry.per_rule_ignores]
         DEP002 = [
             # packages that are installed but not imported
