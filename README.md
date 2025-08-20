@@ -56,8 +56,7 @@ Available recipes:
     docs-gen          # Generate documentation using pdoc
     docs-serve        # Serve the docs with a simple HTTP server
     gact              # Run the GitHub Actions workflow for all branches
-    gact-pr           # Alias for gact-pull-request
-    gact-pull-request # Run the GitHub Actions workflow for pull requests
+    gact-pull-request # Run the GitHub Actions workflow for pull requests [alias: gact-pr]
     gact-release      # Run the GitHub Actions workflow for release
     install           # Install pre-commit hooks and development project dependencies with uv
     pre-commit        # Run pre-commit hooks on all files
@@ -66,8 +65,7 @@ Available recipes:
     test              # Simple execution of tests with coverage
     test-all          # Run static checker and tests for all compatible python versions
     test-verbose      # Run tests with coverage and increased output
-    update            # Alias for upgrade
-    upgrade           # Upgrades all project and pre-commit dependencies respecting pyproject.toml constraints
+    upgrade           # Upgrades all project and pre-commit dependencies respecting pyproject.toml constraints [alias: update]
 ```
 
 ## Integration with GitHub Actions

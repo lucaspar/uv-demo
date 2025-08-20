@@ -5,6 +5,9 @@ SHELL := x'/bin/bash'
 DOCS_PORT := "12001"
 DOC_FILES := '`find docs/ -type f`'
 
+alias update:= upgrade
+alias gact-pr:= gact-pull-request
+
 # Installs dependencies and runs tests
 all: install test
 
@@ -51,9 +54,6 @@ gact:
     # gh extension install nektos/gh-act
     gh act \
         --workflows "`git rev-parse --show-toplevel`/.github/workflows"
-
-# Alias for gact-pull-request
-gact-pr: gact-pull-request
 
 # Run the GitHub Actions workflow for pull requests
 gact-pull-request:
@@ -109,9 +109,6 @@ test-verbose:
 # Serve the coverage report with a simple HTTP server
 serve-coverage:
     python -m http.server 8000 -d "tests/htmlcov"
-
-# Alias for upgrade
-update: upgrade
 
 # Upgrades all project and pre-commit dependencies respecting pyproject.toml constraints
 upgrade:
