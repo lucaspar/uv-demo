@@ -49,7 +49,6 @@ uv run uv-demo
 Available recipes:
     all               # Installs dependencies and runs tests
     build             # Build the package and run tests
-    check             # Run all code quality checks and linting
     clean             # Clean up generated files
     deptry            # Run deptry to check for unused and missing dependencies
     docs              # Generate and serve documentation
@@ -59,7 +58,7 @@ Available recipes:
     gact-pull-request # Run the GitHub Actions workflow for pull requests [alias: gact-pr]
     gact-release      # Run the GitHub Actions workflow for release
     install           # Install pre-commit hooks and development project dependencies with uv
-    pre-commit        # Run pre-commit hooks on all files
+    pre-commit        # Run pre-commit hooks on all files [alias: check]
     publish           # Build and publish the package to PyPI
     serve-coverage    # Serve the coverage report with a simple HTTP server
     test              # Simple execution of tests with coverage
