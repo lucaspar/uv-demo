@@ -22,9 +22,7 @@
     ]
 
     # https://packaging.python.org/en/latest/specifications/dependency-specifiers/
-    dependencies = [
-    "loguru>=0.7.2",
-]
+    dependencies = ["loguru>=0.7.2"]
 
     [project.scripts]
         uv-demo     = "uv_demo:say_hello"
@@ -36,8 +34,8 @@
         Repository = "https://github.com/lucaspar/uv-demo"
 
 [build-system]
-    build-backend = "hatchling.build"
-    requires      = ["hatchling"]
+    build-backend = "uv_build"
+    requires      = ["uv_build"]
 
 [tool.coverage.html]
     directory = "tests/htmlcov"
@@ -83,7 +81,13 @@
 
 [tool.hatch.build.targets.sdist]
     # https://hatch.pypa.io/latest/config/build/
-    exclude = [".github", "*.env*", "*secret*", "config/"]
+    exclude = ["*.bin", ".github", "*.env*", "*secret*", "config/"]
+
+[tool.uv.build-backend]
+    # https://docs.astral.sh/uv/reference/settings/#build-backend_source-exclude
+    source-exclude = ["*.bin", ".github", "*.env*", "*secret*", "config/"]
+    # https://docs.astral.sh/uv/reference/settings/#build-backend_wheel-exclude
+    wheel-exclude = ["*.bin", ".github", "*.env*", "*secret*", "config/"]
 
 [tool.pytest]
 
@@ -117,4 +121,4 @@
         "ruff>=0.6.9",
         "pylint>=3.3.6",
         "pyright>=1.1.399",
-]
+    ]
