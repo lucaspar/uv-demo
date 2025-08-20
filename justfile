@@ -96,7 +96,7 @@ test:
 # Run static checker and tests for all compatible python versions
 test-all:
     just check
-    @pyv=("3.11" "3.12" "3.13"); \
+    @pyv=("3.11" "3.12" "3.13" "3.14"); \
     for py in "${pyv[@]}"; do \
         echo "${py}"; \
         uv run -p "${py}" pytest -v --cov="src"; \
