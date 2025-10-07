@@ -55,8 +55,6 @@
 
 [tool.coverage]
 
-    data_file = "tests/htmlcov/.coverage"
-
     [tool.coverage.html]
         directory = "tests/htmlcov"
 
@@ -85,7 +83,24 @@
         ]
 
     [tool.coverage.run]
+        # https://coverage.readthedocs.io/en/latest/config.html#run
+
+        # https://coverage.readthedocs.io/en/latest/config.html#run-concurrency
+        # if your program uses multiprocessing, gevent, greenlet, or eventlet, you must name
+        # that library in this option, or coverage.py will produce very wrong results.
+        concurrency = ["thread", "multiprocessing"]
+
+        # https://coverage.readthedocs.io/en/latest/config.html#run-data-file
+        # name of the data file to use for storing or reporting coverage
+        data_file = "tests/htmlcov/.coverage"
+
+        # https://coverage.readthedocs.io/en/latest/config.html#run-omit
+        # list of file name patterns, the files to leave out of measurement or reporting
         omit = ["tests/*", "**/main.py", "**/__init__.py"]
+
+        # https://coverage.readthedocs.io/en/latest/config.html#run-source
+        # list of packages or directories, the source to measure during execution
+        source = ["src"]
 
 [tool.deptry]
     # https://deptry.com/usage/#options
