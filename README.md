@@ -5,12 +5,15 @@
 [![Pepy Total Downloads](https://img.shields.io/pepy/dt/uv-demo)](https://pypi.org/project/uv-demo/)
 [![Code Quality Check](https://github.com/lucaspar/uv-demo/actions/workflows/code-quality.yaml/badge.svg)](https://github.com/lucaspar/uv-demo/actions/workflows/code-quality.yaml)
 
-A demo and template for a modern Python package managed by `uv`. Very useless as a package.
+A demo and template for a modern Python package managed by `uv`. Very useless as a
+package.
 
-Use this as a template for new projects, or as a reference for how to set up a Python project with the following:
+Use this as a template for new projects, or as a reference for how to set up a Python
+project with the following:
 
 + [x] `uv` as the Python package manager.
-+ [x] [`pre-commit` hooks](./.pre-commit-config.yaml) for code formatting, linting, and quality checks.
++ [x] [`pre-commit` hooks](./.pre-commit-config.yaml) for code formatting, linting, and
+  quality checks.
 + [x] [GitHub Actions](./.github/workflows/) for testing and publishing.
 + [x] Multiple Python versions tested with `uv -p ${python-version} run pytest [...]`.
 + [x] `gh-act` for running GitHub Actions locally.
@@ -69,13 +72,15 @@ Available recipes:
 
 ## Integration with GitHub Actions
 
-See the [Upload Python Package workflow file](.github/workflows/python-publish.yaml) for this package.
+See the [Upload Python Package workflow file](.github/workflows/python-publish.yaml) for
+this package.
 
 ### Running actions locally
 
 You can use `act` to run GitHub Actions locally. Use cases:
 
-1. While writing a workflow, to test the workflow locally before pushing to the repository.
+1. While writing a workflow, to test the workflow locally before pushing to the
+   repository.
 2. Run the publishing workflow without setting secrets on GitHub.
 3. Before opening a pull request, to check the workflow will pass.
 

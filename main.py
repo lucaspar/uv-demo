@@ -1,8 +1,7 @@
 """Usage example for this package."""
 
-from loguru import logger as log
-
 import uv_demo
+from loguru import logger as log
 
 
 def main() -> None:

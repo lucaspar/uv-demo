@@ -1,8 +1,8 @@
 """Tests the greetings module."""
 
 from loguru import logger as log
-
-from uv_demo.greetings import say_goodbye, say_hello
+from uv_demo.greetings import say_goodbye
+from uv_demo.greetings import say_hello
 
 
 def test_hello_greeting(capsys) -> None:

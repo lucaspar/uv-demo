@@ -1,5 +1,7 @@
 """Hello module for uv-demo."""
 
+# ruff: noqa: T201
+
 from loguru import logger as log
 
 LIB_NAME: str = "uv_demo"

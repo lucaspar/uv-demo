@@ -1,5 +1,11 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+exclude: "^docs/|^dist/|^tests/htmlcov/"
+default_stages: [pre-commit]
+
+default_language_version:
+    python: python3.14
+
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v6.0.0
@@ -26,6 +32,19 @@ repos:
             args:
                 - --autofix
                 - --indent=4
+
+    # Biome is a (much) faster alternative to prettier. The following hook ids are available:
+    #   biome-ci        Check formatting, check if imports are organized, and lints
+    #   biome-check     Format, organize imports, lint, and apply safe fixes to the committed files
+    #   biome-format    Format the committed files
+    #   biome-lint      Lint and apply safe fixes to the committed files
+    - repo: https://github.com/biomejs/pre-commit
+      rev: v2.2.5
+      hooks:
+          - id: biome-check
+            # exclude automatically generated files
+            exclude: "^tests/htmlcov/|^docs/|^dist/"
+            additional_dependencies: ["@biomejs/biome@^2"]
 
     # makes sure the uv.lock file is up to date and .venv is in sync
     - repo: https://github.com/astral-sh/uv-pre-commit
@@ -68,6 +87,33 @@ repos:
                     "--verbose",
                 ]
 
+    # runs the ruff linter and formatter
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.13.3
+      hooks:
+          # linter
+          - id: ruff # runs ruff check --force-exclude
+            args:
+                # we have to pick one ruff config between gateway and sdk...
+                #   the SDK has additional constraints for having to support multiple
+                #   python versions, so it's a safer choice for a project-wide config;
+                #   though be aware that this might omit PyUpgrade improvements that
+                #   could be applied to the gateway side.
+                [
+                    # --verbose, # for debugging
+                    # --show-files, # for debugging
+                    # --show-fixes, # for debugging
+                    --no-cache,
+                    --fix,
+                    --exit-non-zero-on-fix,
+                    --config,
+                    "pyproject.toml",
+                    # --show-settings, # for debugging
+                ]
+          # formatter
+          - id: ruff-format # runs ruff format --force-exclude
+            args: [--config, "pyproject.toml"]
+
     # run pyright
     # https://github.com/RobertCraigie/pyright-python#pre-commit
     - repo: https://github.com/RobertCraigie/pyright-python
@@ -75,3 +121,17 @@ repos:
       hooks:
           - id: pyright
             entry: uv run pyright --verbose --stats
+
+    # linter for markdown files - see .markdownlint.yaml to configure rules
+    - repo: https://github.com/igorshubovych/markdownlint-cli
+      rev: "v0.45.0"
+      hooks:
+          - id: markdownlint
+            args: ["-f"]
+            stages: [pre-commit]
+
+# sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
+ci:
+    autoupdate_schedule: weekly
+    skip: []
+    submodules: false
