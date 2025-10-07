@@ -38,35 +38,39 @@
     build-backend = "uv_build"
     requires      = ["uv_build"]
 
-[tool.coverage.html]
-    directory = "tests/htmlcov"
+[tool.coverage]
 
-[tool.coverage.report]
-    # https://coverage.readthedocs.io/en/latest/source.html
+    data_file = "tests/coverage/.coverage"
 
-    # https://coverage.readthedocs.io/en/latest/excluding.html#advanced-exclusion
-    exclude_also = [
-        # 1. Exclude an except clause of a specific form:
-        "except ValueError:\\n\\s*assume\\(False\\)",
-        # 2. Comments to turn coverage on and off:
-        "no cover: start(?s:.)*?no cover: stop",
-        # 3. A pragma comment that excludes an entire file:
-        "\\A(?s:.*# pragma: exclude file.*)\\Z",
-        # common exclusions
-        "def __repr__",
-        "if self.debug:",
-        "if settings.DEBUG",
-        "raise AssertionError",
-        "raise NotImplementedError",
-        "if 0:",
-        "if __name__ == .__main__.:",
-        "if TYPE_CHECKING:",
-        "class .*\\bProtocol\\):",
-        "@(abc\\.)?abstractmethod",
-    ]
+    [tool.coverage.html]
+        directory = "tests/htmlcov"
 
-[tool.coverage.run]
-    omit = ["tests/*", "**/main.py", "**/__init__.py"]
+    [tool.coverage.report]
+        # https://coverage.readthedocs.io/en/latest/source.html
+
+        # https://coverage.readthedocs.io/en/latest/excluding.html#advanced-exclusion
+        exclude_also = [
+            # 1. Exclude an except clause of a specific form:
+            "except ValueError:\\n\\s*assume\\(False\\)",
+            # 2. Comments to turn coverage on and off:
+            "no cover: start(?s:.)*?no cover: stop",
+            # 3. A pragma comment that excludes an entire file:
+            "\\A(?s:.*# pragma: exclude file.*)\\Z",
+            # common exclusions
+            "def __repr__",
+            "if self.debug:",
+            "if settings.DEBUG",
+            "raise AssertionError",
+            "raise NotImplementedError",
+            "if 0:",
+            "if __name__ == .__main__.:",
+            "if TYPE_CHECKING:",
+            "class .*\\bProtocol\\):",
+            "@(abc\\.)?abstractmethod",
+        ]
+
+    [tool.coverage.run]
+        omit = ["tests/*", "**/main.py", "**/__init__.py"]
 
 [tool.deptry]
     # https://deptry.com/usage/#options
@@ -112,8 +116,9 @@
         testpaths            = ["tests"]
         verbosity_test_cases = 2
 
-[tool.uv]
-    dev-dependencies = [
+[dependency-groups]
+
+    dev = [
         "deptry>=0.20.0",
         "mypy>=1.13.0",
         "pdoc>=15.0.0",
@@ -125,3 +130,6 @@
         "pylint>=3.3.6",
         "pyright>=1.1.399",
     ]
+
+[tool.uv]
+    default-groups = ["dev"]
