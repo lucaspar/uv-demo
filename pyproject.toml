@@ -322,20 +322,20 @@
         # no Warning level messages displayed, use "--disable=all --enable=classes
         # --disable=W".
         disable = [
-            "bad-inline-option",
-            "deprecated-pragma",
-            "file-ignored",
-            "locally-disabled",
-            "missing-class-docstring",
-            "missing-function-docstring",
-            "raw-checker-failed",
-            "suppressed-message",
-            "too-few-public-methods",
-            "unsubscriptable-object",
-            "use-implicit-booleaness-not-comparison-to-string",
-            "use-implicit-booleaness-not-comparison-to-zero",
-            "use-symbolic-message-instead",
-            "useless-suppression",
+            # "bad-inline-option",
+            # "deprecated-pragma",
+            # "file-ignored",
+            # "locally-disabled",
+            # "missing-class-docstring",
+            # "missing-function-docstring",
+            # "raw-checker-failed",
+            # "suppressed-message",
+            # "too-few-public-methods",
+            # "unsubscriptable-object",
+            # "use-implicit-booleaness-not-comparison-to-string",
+            # "use-implicit-booleaness-not-comparison-to-zero",
+            # "use-symbolic-message-instead",
+            # "useless-suppression",
             "wrong-import-order",                               # handled by ruff
         ]
 
@@ -381,8 +381,8 @@
     ignore           = ["**/.venv/**"]
     include          = [".", "src", "tests"]
     pythonPlatform   = "Linux"
-    stubPath         = "./typings"           # defaults to ./typings
-    typeCheckingMode = "standard"            # "off", "basic", "standard", "strict"
+    # stubPath         = "./typings"           # defaults to ./typings
+    typeCheckingMode = "strict"            # "off", "basic", "standard", "strict"
 
     exclude = [
         "*.proto",
@@ -412,12 +412,12 @@
         "**/venv/",
     ]
 
-    # Pylint rule list:
-    # https://pylint.readthedocs.io/en/stable/user_guide/checkers/features.html
-    lint.ignore = [
-        # "E501", # line too long
-        "R0903", # too few public methods
-    ]
+    # # Pylint rule list:
+    # # https://pylint.readthedocs.io/en/stable/user_guide/checkers/features.html
+    # lint.ignore = [
+    #     # "E501", # line too long
+    #     "R0903", # too few public methods
+    # ]
 
     # Reports:
     #   https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings

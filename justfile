@@ -20,8 +20,8 @@ build:
 
 # Clean up generated files
 clean:
-    rm -rf \
-        '.tox' '.coverage' \
+    @rm -rvf \
+        '.tox' '.coverage' 'tests/htmlcov' '.ruff_cache' \
         '.pytest_cache' '.python-version' '.cache' 'dist' \
         '.venv' '.eggs' '.eggs/' \
         '*.egg-info' '*.egg-info/'
