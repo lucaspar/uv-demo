@@ -70,6 +70,25 @@ repos:
             always_run: true
             pass_filenames: false
 
+    # 'ty' type checker; no official hook yet, track issue 269:
+    # https://github.com/astral-sh/ty/issues/269
+    - repo: local
+      hooks:
+          - id: ty
+            name: ty check
+            entry: uv run ty check .
+            language: system
+            pass_filenames: false
+
+    # 'pyrefly' type checker
+    - repo: local
+      hooks:
+          - id: pyrefly
+            name: pyrefly check
+            entry: uv run pyrefly check .
+            language: system
+            pass_filenames: false
+
     # run pylint
     # https://pylint.pycqa.org/en/latest/user_guide/installation/pre-commit-integration.html
     - repo: local

@@ -56,7 +56,7 @@ Available recipes:
     [dev]
     install                   # Install pre-commit hooks and development project dependencies with uv
     upgrade                   # Upgrade all project and pre-commit dependencies respecting pyproject.toml constraints [alias: update]
-    pre-commit                # Run pre-commit hooks on all files [alias: check]
+    pre-commit *args          # Run pre-commit hooks on all files; you may pass the hook ID: `just pre-commit pyrefly`` [alias: check]
     deptry                    # Run deptry to check for unused and missing dependencies
 
     [build]
@@ -76,9 +76,9 @@ Available recipes:
     docs-serve                # Serve the docs with a simple HTTP server
 
     [ci]
-    gact                      # Run the GitHub Actions workflow for all branches
-    gact-pull-request         # Run the GitHub Actions workflow for pull requests [alias: gact-pr]
-    gact-release              # Run the GitHub Actions workflow for release
+    gact *args                # GH Actions workflow for all branches
+    gact-pull-request         # GH Actions workflow with custom arguments. Example: `just gact -j qa-lint` to run only the linting job. [alias: gact-pr]
+    gact-release              # GH Actions workflow for release
 ```
 
 ## Integration with GitHub Actions
@@ -103,4 +103,14 @@ cp "config/secrets.env.example" "config/secrets.env"
 
 Then edit the new file to add your secrets.
 
-After that, run `just gact` to run the GitHub Actions workflow locally.
+After that, run `just gact --list` to see the available jobs.
+
+```bash
+just gact -j qa-lint
+```
+
+Or, run predefined workflows e.g. for pull requests:
+
+```bash
+just gact-pr
+```

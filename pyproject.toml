@@ -51,6 +51,8 @@
         "ruff>=0.6.9",
         "pylint>=3.3.6",
         "pyright>=1.1.399",
+        "ty>=0.0.17",
+        "pyrefly>=0.52.0",
     ]
 
 [tool.coverage]
@@ -375,6 +377,44 @@
             "C0116", # missing function or method docstring
         ]
 
+[tool.pyrefly]
+    infer-with-first-use = false
+    project-excludes = [
+        ".venv",
+        "*.proto",
+        "*.pyc",
+        "**/__pycache__",
+        "**/.*",
+        "**/.cache/",
+        "**/.dvc/",
+        "**/.git/",
+        "**/.ipynb_checkpoints/",
+        "**/.neptune/",
+        "**/.ruff_cache/",
+        "**/.tox/",
+        "**/.trash/",
+        "**/.venv/",
+        "**/build/",
+        "**/cache/",
+        "**/data/",
+        "**/datalakes/",
+        "**/dataset/",
+        "**/datasets/",
+        "**/dist/",
+        "**/node_modules",
+        "**/node_modules/",
+        "**/outputs/",
+        "**/previews/",
+        "**/temp/",
+        "**/tmp/",
+        "**/venv/",
+    ]
+    project-includes = [".", "src", "tests"]
+    python-platform = "linux"
+
+    [tool.pyrefly.errors]
+        no-access = "info"
+
 [tool.pyright]
     # https://github.com/microsoft/pyright/blob/main/docs/configuration.md
 
@@ -572,6 +612,16 @@
         line-ending               = "auto"
         quote-style               = "double"
         skip-magic-trailing-comma = false
+
+[tool.ty]
+
+    # https://docs.astral.sh/ty/reference/configuration/
+    [tool.ty.rules]
+        # https://docs.astral.sh/ty/reference/configuration/#rules
+
+    [tool.ty.terminal]
+        # https://docs.astral.sh/ty/reference/configuration/#terminal
+        output-format = "concise"
 
 [tool.uv]
     default-groups = ["dev"]
