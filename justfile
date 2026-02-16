@@ -2,83 +2,49 @@
 # https://cheatography.com/linux-china/cheat-sheets/justfile/
 
 SHELL := x'/bin/bash'
-DOCS_PORT := "12001"
 DOC_FILES := '`find docs/ -type f`'
+PORT_COVERAGE := "12002"
+PORT_DOCS := "12001"
+SUPPORTED_PYTHON_VERSIONS := "3.11 3.12 3.13 3.14"
 
 alias check:= pre-commit
 alias update:= upgrade
 alias gact-pr:= gact-pull-request
 
-# Installs dependencies and runs tests
-all: install test
-
-# Build the package and run tests
-build:
-    uv build --no-cache
-
-# Run all code quality checks and linting
-
-# Clean up generated files
-clean:
-    @rm -rvf \
-        '.tox' '.coverage' 'tests/htmlcov' '.ruff_cache' \
-        '.pytest_cache' '.python-version' '.cache' 'dist' \
-        '.venv' '.eggs' '.eggs/' \
-        '*.egg-info' '*.egg-info/'
-
-# Run deptry to check for unused and missing dependencies
-deptry:
-    uv run deptry .
-
-# Generate and serve documentation
-docs: docs-gen docs-serve
-
-# Generate documentation using pdoc
-docs-gen:
-    uv run pdoc "src/uv_demo/" -o "docs/"
-    @echo {{DOC_FILES}}
-    uv run pre-commit run --files {{DOC_FILES}} || true
-    @echo -e "\n\033[32mDocumentation generated in docs/ and linted with pre-commit hooks.\033[0m\n"
-
-# Serve the docs with a simple HTTP server
-docs-serve:
-    uv run -m http.server {{DOCS_PORT}} -d "docs/" &> "/dev/null" & disown
-    @sleep 1
-    @xdg-open "http://localhost:{{DOCS_PORT}}/"
-
-# Run the GitHub Actions workflow for all branches
-gact:
-    # install gh-act with:
-    # gh extension install nektos/gh-act
-    gh act \
-        --workflows "`git rev-parse --show-toplevel`/.github/workflows"
-
-# Run the GitHub Actions workflow for pull requests
-gact-pull-request:
-    # this will test the build and publish jobs, but the publish job will only
-    # run successfully on the GitHub repo, as the configured trusted publisher.
-    gh act \
-        --workflows "`git rev-parse --show-toplevel`/.github/workflows" \
-        --secret-file "config/secrets.env" \
-        pull-request
-
-# Run the GitHub Actions workflow for release
-gact-release:
-    gh act \
-        --workflows "`git rev-parse --show-toplevel`/.github/workflows" \
-        --secret-file "config/secrets.env" \
-        release
+# List available recipes
+[default]
+list:
+    @just --list --unsorted
 
 # Install pre-commit hooks and development project dependencies with uv
+[group('dev')]
 install:
     uv run pre-commit install --install-hooks
     uv sync --dev --frozen
 
+# Upgrade all project and pre-commit dependencies respecting pyproject.toml constraints
+[group('dev')]
+upgrade:
+    uv sync --upgrade
+    uv run pre-commit autoupdate
+
 # Run pre-commit hooks on all files
+[group('dev')]
 pre-commit:
     uv run pre-commit run --all-files
 
+# Run deptry to check for unused and missing dependencies
+[group('dev')]
+deptry:
+    uv run deptry .
+
+# Build the package and run tests
+[group('build')]
+build:
+    uv build --no-cache
+
 # Build and publish the package to PyPI
+[group('build')]
 publish:
     just build
     @if [ ! -f config/secrets.env ]; then \
@@ -88,27 +54,90 @@ publish:
     @export UV_PUBLISH_TOKEN=`/usr/bin/grep -E '^PYPI_API_TOKEN' "config/secrets.env" | cut -d '=' -f2`; uv publish
 
 # Simple execution of tests with coverage
-test:
-    uv run pytest -vvv --cov="src"
+[group('test')]
+test *pytest_args:
+    uv run --resolution highest pytest -vvv \
+        --cov="src" \
+        --cov-fail-under=75 \
+        --no-cov-on-fail \
+        {{pytest_args}}
+
+# runs tests with the lowest compatible versions of dependencies, to check compatibility issues
+[group('test')]
+test-lowest *pytest_args:
+    uv run --resolution lowest-direct pytest -vvv \
+        {{pytest_args}}
+    # reset lock file
+    uv lock --quiet --resolution highest
+
+# Run tests with coverage and increased output
+[group('test')]
+test-verbose *pytest_args:
+    uv run pytest -vvv --cov="src" --capture=no {{pytest_args}}
 
 # Run static checker and tests for all compatible python versions
+[group('test')]
 test-all:
-    just check
-    @pyv=("3.11" "3.12" "3.13" "3.14"); \
+    @pyv=({{SUPPORTED_PYTHON_VERSIONS}}); \
     for py in "${pyv[@]}"; do \
         echo "${py}"; \
         uv run -p "${py}" pytest -v --cov="src"; \
     done
 
-# Run tests with coverage and increased output
-test-verbose:
-    uv run pytest -vvv --cov="src" --capture=no
-
 # Serve the coverage report with a simple HTTP server
+[group('test')]
 serve-coverage:
-    python -m http.server 8000 -d "tests/htmlcov"
+    python -m http.server {{PORT_COVERAGE}} -d "tests/htmlcov"
 
-# Upgrades all project and pre-commit dependencies respecting pyproject.toml constraints
-upgrade:
-    uv sync --upgrade
-    uv run pre-commit autoupdate
+# Generate and serve documentation
+[group('docs')]
+docs: docs-gen docs-serve
+
+# Generate documentation using pdoc
+[group('docs')]
+docs-gen:
+    uv run pdoc "src/uv_demo/" -o "docs/"
+    @echo {{DOC_FILES}}
+    uv run pre-commit run --files {{DOC_FILES}} || true
+    @echo -e "\n\033[32mDocumentation generated in docs/ and linted with pre-commit hooks.\033[0m\n"
+
+# Serve the docs with a simple HTTP server
+[group('docs')]
+docs-serve:
+    uv run -m http.server {{PORT_DOCS}} -d "docs/" &> "/dev/null" & disown
+    @sleep 1
+    @xdg-open "http://localhost:{{PORT_DOCS}}/"
+
+# Run the GitHub Actions workflow for all branches
+[group('ci')]
+gact:
+    # install gh-act with:
+    # gh extension install nektos/gh-act
+    gh act \
+        --workflows "`git rev-parse --show-toplevel`/.github/workflows"
+
+# Run the GitHub Actions workflow for pull requests
+[group('ci')]
+gact-pull-request:
+    # this will test the build and publish jobs, but the publish job will only
+    # run successfully on the GitHub repo, as the configured trusted publisher.
+    gh act \
+        --workflows "`git rev-parse --show-toplevel`/.github/workflows" \
+        --secret-file "config/secrets.env" \
+        pull-request
+
+# Run the GitHub Actions workflow for release
+[group('ci')]
+gact-release:
+    gh act \
+        --workflows "`git rev-parse --show-toplevel`/.github/workflows" \
+        --secret-file "config/secrets.env" \
+        release
+
+# Clean up generated files
+clean:
+    @rm -rvf \
+        '.tox' '.coverage' 'tests/htmlcov' '.ruff_cache' \
+        '.pytest_cache' '.python-version' '.cache' 'dist' \
+        '.venv' '.eggs' '.eggs/' \
+        '*.egg-info' '*.egg-info/'

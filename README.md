@@ -50,24 +50,35 @@ uv run uv-demo
 ```bash
 # just --list
 Available recipes:
-    all               # Installs dependencies and runs tests
-    build             # Build the package and run tests
-    clean             # Clean up generated files
-    deptry            # Run deptry to check for unused and missing dependencies
-    docs              # Generate and serve documentation
-    docs-gen          # Generate documentation using pdoc
-    docs-serve        # Serve the docs with a simple HTTP server
-    gact              # Run the GitHub Actions workflow for all branches
-    gact-pull-request # Run the GitHub Actions workflow for pull requests [alias: gact-pr]
-    gact-release      # Run the GitHub Actions workflow for release
-    install           # Install pre-commit hooks and development project dependencies with uv
-    pre-commit        # Run pre-commit hooks on all files [alias: check]
-    publish           # Build and publish the package to PyPI
-    serve-coverage    # Serve the coverage report with a simple HTTP server
-    test              # Simple execution of tests with coverage
-    test-all          # Run static checker and tests for all compatible python versions
-    test-verbose      # Run tests with coverage and increased output
-    upgrade           # Upgrades all project and pre-commit dependencies respecting pyproject.toml constraints [alias: update]
+    list                      # List available recipes
+    clean                     # Clean up generated files
+
+    [dev]
+    install                   # Install pre-commit hooks and development project dependencies with uv
+    upgrade                   # Upgrade all project and pre-commit dependencies respecting pyproject.toml constraints [alias: update]
+    pre-commit                # Run pre-commit hooks on all files [alias: check]
+    deptry                    # Run deptry to check for unused and missing dependencies
+
+    [build]
+    build                     # Build the package and run tests
+    publish                   # Build and publish the package to PyPI
+
+    [test]
+    test *pytest_args         # Simple execution of tests with coverage
+    test-lowest *pytest_args  # runs tests with the lowest compatible versions of dependencies, to check compatibility issues
+    test-verbose *pytest_args # Run tests with coverage and increased output
+    test-all                  # Run static checker and tests for all compatible python versions
+    serve-coverage            # Serve the coverage report with a simple HTTP server
+
+    [docs]
+    docs                      # Generate and serve documentation
+    docs-gen                  # Generate documentation using pdoc
+    docs-serve                # Serve the docs with a simple HTTP server
+
+    [ci]
+    gact                      # Run the GitHub Actions workflow for all branches
+    gact-pull-request         # Run the GitHub Actions workflow for pull requests [alias: gact-pr]
+    gact-release              # Run the GitHub Actions workflow for release
 ```
 
 ## Integration with GitHub Actions
