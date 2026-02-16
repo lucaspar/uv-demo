@@ -108,7 +108,7 @@ docs-serve:
     @sleep 1 && xdg-open "http://localhost:{{ PORT_DOCS }}/" &
     uv run -m http.server {{ PORT_DOCS }} -d "docs/"
 
-# GH Actions workflow for all branches
+# GH Actions workflow with custom arguments. Example: `just gact -j qa-lint` to run only the linting job.
 [group('ci')]
 gact *args:
     # install gh-act with:
@@ -117,7 +117,7 @@ gact *args:
         --workflows "`git rev-parse --show-toplevel`/.github/workflows" \
         {{ args }}
 
-# GH Actions workflow with custom arguments. Example: `just gact -j qa-lint` to run only the linting job.
+# GH Actions workflow for pull requests, featuring QA jobs.
 [group('ci')]
 gact-pull-request:
     # this will test the build and publish jobs, but the publish job will only

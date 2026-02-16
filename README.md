@@ -3,7 +3,7 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/uv-demo)](https://pypi.org/project/uv-demo/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/uv-demo)](https://pypi.org/project/uv-demo/)
 [![Pepy Total Downloads](https://img.shields.io/pepy/dt/uv-demo)](https://pypi.org/project/uv-demo/)
-[![Code Quality Check](https://github.com/lucaspar/uv-demo/actions/workflows/code-quality.yaml/badge.svg)](https://github.com/lucaspar/uv-demo/actions/workflows/code-quality.yaml)
+[![Code Quality](https://github.com/lucaspar/uv-demo/actions/workflows/qa.yaml/badge.svg)](https://github.com/lucaspar/uv-demo/actions/workflows/qa.yaml)
 
 A demo and template for a modern Python package managed by `uv`. Very useless as a
 package.
@@ -76,8 +76,8 @@ Available recipes:
     docs-serve                # Serve the docs with a simple HTTP server
 
     [ci]
-    gact *args                # GH Actions workflow for all branches
-    gact-pull-request         # GH Actions workflow with custom arguments. Example: `just gact -j qa-lint` to run only the linting job. [alias: gact-pr]
+    gact *args                # GH Actions workflow with custom arguments. Example: `just gact -j qa-lint` to run only the linting job.
+    gact-pull-request         # GH Actions workflow for pull requests, featuring QA jobs. [alias: gact-pr]
     gact-release              # GH Actions workflow for release
 ```
 
