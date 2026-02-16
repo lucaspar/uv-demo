@@ -5,7 +5,7 @@ SHELL := x'/bin/bash'
 DOC_FILES := '`find docs/ -type f`'
 PORT_COVERAGE := "12002"
 PORT_DOCS := "12001"
-SUPPORTED_PYTHON_VERSIONS := "3.11 3.12 3.13 3.14"
+SUPPORTED_PYTHON_VERSIONS := "3.11 3.12 3.13 3.14 3.15"
 PRE_COMMIT_DEFAULT_ARGS := "--all-files"
 
 alias check := pre-commit
