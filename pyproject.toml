@@ -5,7 +5,7 @@
     name            = "uv-demo"
     readme          = "README.md"
     requires-python = ">=3.11"
-    version         = "0.3.1"
+    version         = "0.3.2"
 
     # https://pypi.org/classifiers/
     classifiers = [
@@ -336,7 +336,7 @@
             # "use-implicit-booleaness-not-comparison-to-zero",
             # "use-symbolic-message-instead",
             # "useless-suppression",
-            "wrong-import-order",                               # handled by ruff
+            "wrong-import-order", # handled by ruff
         ]
 
         # Enable the message, report, category or checker with the given id(s). You can
@@ -378,11 +378,11 @@
 [tool.pyright]
     # https://github.com/microsoft/pyright/blob/main/docs/configuration.md
 
-    ignore           = ["**/.venv/**"]
-    include          = [".", "src", "tests"]
-    pythonPlatform   = "Linux"
+    ignore         = ["**/.venv/**"]
+    include        = [".", "src", "tests"]
+    pythonPlatform = "Linux"
     # stubPath         = "./typings"           # defaults to ./typings
-    typeCheckingMode = "strict"            # "off", "basic", "standard", "strict"
+    typeCheckingMode = "strict" # "off", "basic", "standard", "strict"
 
     exclude = [
         "*.proto",
