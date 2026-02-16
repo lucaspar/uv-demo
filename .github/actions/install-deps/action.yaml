@@ -1,0 +1,36 @@
+name: "install-deps"
+description: "Installs project dependencies using uv. Checkout the code before using it."
+
+inputs:
+    python-version:
+        description: "Python version to use for installing dependencies."
+        required: false
+        default: "3.13"
+    resolution-mode:
+        description: "uv resolution mode to use for caching. See https://docs.astral.sh/uv/cli/uv-sync/#options for more details."
+        required: false
+        default: "highest"
+
+runs:
+    using: "composite"
+    steps: # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps
+        - name: Install uv
+          uses: astral-sh/setup-uv@v7
+          # https://github.com/marketplace/actions/astral-sh-setup-uv
+          with:
+              # caching: https://github.com/astral-sh/setup-uv/blob/main/docs/caching.md
+              cache-python: true
+              cache-suffix: "${{ inputs.resolution-mode }}"
+              enable-cache: true
+              prune-cache: false
+              restore-cache: true
+              version: "latest"
+
+        - name: Install dependencies
+          id: uv-sync
+          run: |
+              uv sync \
+                --frozen --dev \
+                --python ${{ inputs.python-version }} \
+                --resolution ${{ inputs.resolution-mode }}
+          shell: bash

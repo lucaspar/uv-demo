@@ -3,7 +3,7 @@
 # https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
 # Test this workflow with `make gact-release`
 
-name: Upload Python Package
+name: "pub"
 
 on:
     workflow_dispatch: # Manually trigger the workflow from the Actions tab
@@ -18,49 +18,23 @@ permissions:
     # 'read' to access the list of commits
     contents: read
 
+env:
+    python-version: "3.14"
+
 jobs:
-    build:
+    pub-build:
         runs-on: ubuntu-latest
-        name: uv-build
         steps:
             # https://github.com/actions/checkout
             - name: Checkout code
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
-            # https://github.com/actions/setup-python
-            - name: Set up Python
-              uses: actions/setup-python@v5
+            - name: Install deps
+              uses: ./.github/actions/install-deps
               with:
-                  python-version: "3.x"
-
-            # https://github.com/astral-sh/setup-uv
-            - name: Install uv
-              uses: astral-sh/setup-uv@v3
-              with:
-                  # The version of uv to install
-                  version: latest # optional, default is latest
-                  # The checksum of the uv version to install
-                  # checksum: # optional
-                  # Used to increase the rate limit when retrieving versions and downloading uv.
-                  github-token: ${{ github.token }} # optional, default is ${{ github.token }}
-                  # Enable caching of the uv cache
-                  enable-cache: false # optional, default is false
-                  # Glob pattern to match files relative to the repository root to control the cache.
-                  # cache-dependency-glob: # optional, default is **/uv.lock
-                  # Suffix for the cache key
-                  # cache-suffix: # optional
-                  # Local path to store the cache.
-                  # cache-local-path: # optional
-                  # Custom path to set UV_TOOL_DIR to.
-                  # tool-dir: # optional
-                  # Custom path to set UV_TOOL_BIN_DIR to.
-                  # tool-bin-dir: # optional
-
-            - name: Install dependencies
-              run: uv sync --frozen --link-mode=copy
-
+                  python-version: ${{ env.python-version }}
             - name: Build package
-              run: uv build --link-mode=copy
+              run: uv build
 
             - name: Store artifact
               uses: actions/upload-artifact@main
@@ -68,10 +42,9 @@ jobs:
                   name: dist
                   path: dist
 
-    deploy:
+    pub-pypi:
         runs-on: ubuntu-latest
-        name: pypi-deploy
-        needs: build
+        needs: pub-build
         environment: pypi
         permissions:
             # A 'write' permission is mandatory for trusted publishing

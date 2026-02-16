@@ -1,0 +1,120 @@
+# This workflow is for quality assurance (QA) checks. It runs on pushes and pull
+#   requests to main and master branches, as well as on demand from the Actions tab.
+# TIP:  To run GH actions locally, you can use nektos/gh-act:
+#           With the GitHub CLI installed, run `gh extension install nektos/gh-act`
+#           Then, run `gh act` from the project root. Choose 'medium' image in the 1st run.
+#       You can set an alias to run it from anywhere within the repo:
+#           `alias gact='gh act --workflows "$(git rev-parse --show-toplevel)"/.github/workflows'
+name: qa
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+            - master
+    pull_request:
+        branches:
+            - main
+            - master
+
+env:
+    python-version: "3.14"
+    UV_LINK_MODE: copy
+
+jobs:
+    qa-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
+            - name: Install deps
+              uses: ./.github/actions/install-deps
+              with:
+                  python-version: ${{ env.python-version }}
+
+            - name: Run tests
+              run: uv run pytest
+
+            - name: Install deps with lowest resolution
+              uses: ./.github/actions/install-deps
+              with:
+                  python-version: ${{ env.python-version }}
+                  resolution-mode: lowest
+
+            - name: Run tests with lowest resolution
+              run: uv run pytest
+
+    qa-lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
+            - name: Install deps
+              uses: ./.github/actions/install-deps
+              with:
+                  python-version: ${{ env.python-version }}
+
+            - name: Lint with Ruff
+              run: uv run ruff check ./src ./tests
+
+            - name: Format with Ruff
+              run: uv run ruff format --check ./src ./tests
+
+    # Run static analysis with pyright
+    #   - Install the pylance extension for VS Code to have these warnings in the editor
+    qa-pyright:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
+            - name: Install deps
+              uses: ./.github/actions/install-deps
+              with:
+                  python-version: ${{ env.python-version }}
+
+            - uses: jakebailey/pyright-action@v3
+              # https://github.com/jakebailey/pyright-action#options
+              with:
+                  pylance-version: latest-release
+                  working-directory: .
+                  python-path: ./.venv/bin/python
+
+    # Type checking with mypy
+    qa-type-mypy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
+            - name: Install deps
+              uses: ./.github/actions/install-deps
+              with:
+                  python-version: ${{ env.python-version }}
+
+            - name: Runs mypy
+              run: uv run mypy ./src
+
+    # Type checking with pyrefly and ty
+    qa-type:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6
+
+            - name: Install deps
+              uses: ./.github/actions/install-deps
+              with:
+                  python-version: ${{ env.python-version }}
+
+            - name: Runs pyrefly
+              run: uv run pyrefly check --color always
+
+            - name: Runs ty
+              run: |
+                  uv run ty check \
+                      --color always \
+                      --output-format concise
