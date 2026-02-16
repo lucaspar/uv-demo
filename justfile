@@ -110,11 +110,12 @@ docs-serve:
 
 # Run the GitHub Actions workflow for all branches
 [group('ci')]
-gact:
+gact *args:
     # install gh-act with:
     # gh extension install nektos/gh-act
     gh act \
-        --workflows "`git rev-parse --show-toplevel`/.github/workflows"
+        --workflows "`git rev-parse --show-toplevel`/.github/workflows" \
+        {{args}}
 
 # Run the GitHub Actions workflow for pull requests
 [group('ci')]

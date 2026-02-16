@@ -385,9 +385,11 @@
     typeCheckingMode = "strict" # "off", "basic", "standard", "strict"
 
     exclude = [
+        ".venv",
         "*.proto",
         "*.pyc",
         "**/__pycache__",
+        "**/.*",
         "**/.cache/",
         "**/.dvc/",
         "**/.git/",
@@ -404,6 +406,7 @@
         "**/dataset/",
         "**/datasets/",
         "**/dist/",
+        "**/node_modules",
         "**/node_modules/",
         "**/outputs/",
         "**/previews/",
@@ -479,63 +482,68 @@
         ]
         select = [
             # RULE SETS: https://docs.astral.sh/ruff/rules/
-            "F",     # Pyflakes
-            "E",     # Pycodestyle errors
-            "W",     # Pycodestyle warnings
-            "C90",   # Cyclomatic complexity
-            "I",     # Isort (import order)
-            "N",     # PEP-8 Naming
-            "UP",    # PyUpgrade (modernize code)
-            "YTT",   # flake8-2020 (modernize code)
-            "ASYNC", # flake8-async
-            "S",     # flake8-bandit (security)
-            "BLE",   # flake8-blind-except
-            "FBT",   # flake8-boolean-trap
-            "B",     # flake8-bugbear (common errors)
-            "A",     # flake8-builtins
-            "COM",   # flake8-commas
-            "C4",    # flake8-comprehensions
-            "DTZ",   # flake8-date-time-zones
-            "T10",   # flake8-debugger
-            "DJ",    # flake8-django
-            "EM",    # flake8-errmsg
-            "EXE",   # flake8-executable
-            "FA",    # flake8-flask
-            'ISC',   # flake8-implicit-str-concat
-            "ICN",   # flake8-import-conventions
-            "LOG",   # flake8-logging
-            "G",     # flake8-logging-format
-            'INP',   # flake8-no-pep-420
-            'PIE',   # flake8-pie (misc lints)
-            "T20",   # flake8-print
-            'PYI',   # flake8-pyi (type hints)
-            'PT',    # flake8-pytest-style
-            "Q",     # flake8-quotes
-            "RSE",   # flake8-raise
-            "RET",   # flake8-return
-            "SLF",   # flake8-self
-            "SLOT",  # flake8-slot
-            "SIM",   # flake8-simplify
-            "TID",   # flake8-tidy-imports
-            "TC",    # flake8-type-checking
-            "INT",   # flake8-gettext
-            "PTH",   # flake8-use-pathlib
-            "ERA",   # eradicate
-            "PD",    # pandas-vet
-            "PGH",   # pygrep-hooks
-            "PL",    # pylint
-            "R",     # refactor
-            "TRY",   # tryceratops (try/except)
-            "FLY",   # flynt (f-string)
-            "PERF",  # perflint (performance)
-            "FURB",  # refurb (refactorings for older code)
-            "RUF",   # ruff-specific rules
-            "AIR",   # airflow
-            # "ANN",  # flake8-annotations (type annotations; 100+ errors atm from cookiecutter-django)
+            "A", # flake8-builtins
+            # "ANN",  # flake8-annotations (type annotations; false-positives with django)
+            "AIR", # airflow
             # "ARG",  # unused function argument
+            "ASYNC", # flake8-async
+            "B",     # flake8-bugbear (common errors)
+            "BLE",   # flake8-blind-except
+            "C4",    # flake8-comprehensions
+            "C90",   # Cyclomatic complexity
+            "COM",   # flake8-commas
+            "DJ",    # flake8-django
             # "DOC",  # docstrings
-            # "FAST", # fastapi
-            # "NPY",  # numpy-specific (unused)
+            "DTZ",  # flake8-date-time-zones
+            "E",    # Pycodestyle errors
+            "EM",   # flake8-errmsg
+            "ERA",  # eradicate
+            "EXE",  # flake8-executable
+            "F",    # Pyflakes
+            "FA",   # flake8-flask
+            "FAST", # fastapi
+            "FBT",  # flake8-boolean-trap
+            # "FIX",   # flake8-fixme
+            "FLY",  # flynt (f-string)
+            "FURB", # refurb (refactorings for older code)
+            "G",    # flake8-logging-format
+            "I",    # Isort (import order)
+            "ICN",  # flake8-import-conventions
+            "INP",  # flake8-no-pep-420
+            "INT",  # flake8-gettext
+            "ISC",  # flake8-implicit-str-concat
+            "LOG",  # flake8-logging
+            "N",    # PEP-8 Naming
+            "NPY",  # numpy-specific
+            "PD",   # pandas-vet
+            "PERF", # perflint (performance)
+            "PGH",  # pygrep-hooks
+            "PIE",  # flake8-pie (misc lints)
+            "PL",   # pylint
+            "PLC",  # pylint convention
+            "PLE",  # pylint error
+            "PLR",  # pylint refactor
+            "PLW",  # pylint warning
+            "PT",   # flake8-pytest-style
+            "PTH",  # flake8-use-pathlib
+            "PYI",  # flake8-pyi (type hints)
+            "Q",    # flake8-quotes
+            "RET",  # flake8-return
+            "RSE",  # flake8-raise
+            "RUF",  # ruff-specific rules
+            "S",    # flake8-bandit (security)
+            "SIM",  # flake8-simplify
+            "SLF",  # flake8-self
+            "SLOT", # flake8-slot
+            "T10",  # flake8-debugger
+            "T20",  # flake8-print
+            "TC",   # flake8-type-checking
+            # "TD",   # flake8-todos
+            "TID", # flake8-tidy-imports
+            "TRY", # tryceratops (try/except)
+            "UP",  # PyUpgrade (modernize code)
+            "W",   # Pycodestyle warnings
+            "YTT", # flake8-2020 (modernize code)
         ]
         # Allow fix for all enabled rules (when `--fix`) is provided.
         fixable   = ["ALL"]
@@ -547,13 +555,19 @@
         dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
         [tool.ruff.lint.isort]
+            # https://docs.astral.sh/ruff/settings/#lint_isort_force-single-line
+            # forces all from imports to appear on their own line
             force-single-line = true
 
         [tool.ruff.lint.pylint]
-            # Controls PLR0913
+            # https://docs.astral.sh/ruff/settings/#max-args
+            # max number of args allowed for function or method definition (PLR0913)
             max-args = 9
 
     [tool.ruff.format]
+        # https://docs.astral.sh/ruff/settings/#format
+        docstring-code-format     = true
+        exclude                   = ["*_pb2.py", "*_pb2_grpc.py", "generated"]
         indent-style              = "space"
         line-ending               = "auto"
         quote-style               = "double"
