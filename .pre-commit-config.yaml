@@ -39,7 +39,7 @@ repos:
     #   biome-format    Format the committed files
     #   biome-lint      Lint and apply safe fixes to the committed files
     - repo: https://github.com/biomejs/pre-commit
-      rev: v2.2.5
+      rev: v2.3.15
       hooks:
           - id: biome-check
             # exclude automatically generated files
@@ -48,7 +48,7 @@ repos:
 
     # makes sure the uv.lock file is up to date and .venv is in sync
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.8.24
+      rev: 0.10.2
       hooks:
           - id: uv-lock
           - id: uv-sync
@@ -89,7 +89,7 @@ repos:
 
     # runs the ruff linter and formatter
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.13.3
+      rev: v0.15.1
       hooks:
           # linter
           - id: ruff # runs ruff check --force-exclude
@@ -117,14 +117,14 @@ repos:
     # run pyright
     # https://github.com/RobertCraigie/pyright-python#pre-commit
     - repo: https://github.com/RobertCraigie/pyright-python
-      rev: v1.1.406
+      rev: v1.1.408
       hooks:
           - id: pyright
             entry: uv run pyright --verbose --stats
 
     # linter for markdown files - see .markdownlint.yaml to configure rules
     - repo: https://github.com/igorshubovych/markdownlint-cli
-      rev: "v0.45.0"
+      rev: "v0.47.0"
       hooks:
           - id: markdownlint
             args: ["-f"]
