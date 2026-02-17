@@ -48,7 +48,7 @@ repos:
 
     # makes sure the uv.lock file is up to date and .venv is in sync
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.10.2
+      rev: 0.10.3
       hooks:
           - id: uv-lock
           - id: uv-sync
